@@ -1,0 +1,42 @@
+Rails:
+  Enabled: true
+Documentation:
+  Enabled: false
+Style/Encoding:
+  Enabled: false
+Metrics/LineLength:
+  Max: 99
+Metrics/ClassLength:
+  Max: 300
+Metrics/MethodLength:
+  Max: 20
+Metrics/BlockLength:
+  Exclude:
+    - 'app/models/concerns/**/*'
+Metrics/ModuleLength:
+  Exclude:
+    - 'app/models/concerns/**/*'
+Style/ClassAndModuleChildren:
+  Enabled: false
+AllCops:
+  TargetRubyVersion: 2.4.2
+  Exclude:
+    - 'config/**/*'
+    - 'db/schema.rb'
+    - 'db/migrate/**/*'
+    - 'lib/**/*'
+    - 'log/**/*'
+    - 'public/**/*'
+    - 'spec/**/*'
+    - 'vendor/**/*'
+    - 'bin/**/*'
+Metrics/CyclomaticComplexity:
+  Severity: warning
+# Style/AccessModifierIndentation:
+#   Description: Check indentation of private/protected visibility modifiers.
+#   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#indent-public-private-protected'
+#   Enabled: true
+# Style/CaseIndentation:
+#   Description: 'Indentation of when in a case/when/[else/]end.'
+#   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#indent-when-to-case'
+#   Enabled: true

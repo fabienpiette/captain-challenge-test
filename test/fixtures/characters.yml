@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  health_points: 1
+  attack_points: 1
+
+two:
+  name: MyString
+  health_points: 1
+  attack_points: 1
+
+# == Schema Information
+#
+# Table name: characters
+#
+#  id            :bigint(8)        not null, primary key
+#  attack_points :integer          default(5), not null
+#  health_points :integer          default(5), not null
+#  name          :string           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
