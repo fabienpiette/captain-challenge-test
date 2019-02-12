@@ -18,8 +18,32 @@ class Character < ApplicationRecord
              inverse_of: :characters,
              optional: true
 
-  has_many :fighters,
-           class_name: 'Fights::Fighter',
+  has_many :left_fights,
+           class_name: 'Fight',
+           foreign_key: 'fighter_left_id',
+           dependent: :destroy,
+           inverse_of: :fighter_left
+
+  has_many :right_fights,
+           class_name: 'Fight',
+           foreign_key: 'fighter_right_id',
+           dependent: :destroy,
+           inverse_of: :fighter_right
+
+  has_many :won_battles,
+           class_name: 'Fight',
+           foreign_key: 'winning_character_id',
+           dependent: :destroy,
+           inverse_of: :winning_character
+
+  has_many :lost_battles,
+           class_name: 'Fight',
+           foreign_key: 'losing_character_id',
+           dependent: :destroy,
+           inverse_of: :losing_character
+
+  has_many :equipments,
+           class_name: 'Equipment',
            foreign_key: 'character_id',
            dependent: :destroy,
            inverse_of: :character
@@ -27,9 +51,6 @@ class Character < ApplicationRecord
   #
   # Through Associations
   #
-  has_many :fights,
-           class_name: 'Fight',
-           through: :fighters
 
   #
   # Callbacks
@@ -46,6 +67,17 @@ class Character < ApplicationRecord
   #
   # Public class methods
   #
+  def fights
+    Fight.where('fighter_left_id = ? OR fighter_right_id = ?', id, id)
+  end
+
+  def fight_strategy
+    Strategies::Simple.new
+  end
+
+  def damage
+    attack_points
+  end
 
   #
   # Public instance methods

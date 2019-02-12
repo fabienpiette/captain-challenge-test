@@ -58,11 +58,11 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'pry'
   gem 'pry-rails'
+  gem 'rb-readline', '~> 0.5.3'
   gem 'rubocop', '~> 0.60.0', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
-  gem 'rb-readline', '~> 0.5.3'
 end
 
 group :test do

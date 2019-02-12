@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Actions</h1>
+
+<% unless @fight.launched? %>
+  <%= link_to 'Launch', launch_fight_path(@fight), method: :post %>
+<% end %>
+
+<% if @fight.launched? && !@fight.finished? %>
+  <%= link_to 'Take turn', take_turn_fight_path(@fight), method: :post %>
+<% end %>
+
+<% if @fight.finished? %>
+  <p>WINNER: <%= @fight.winning_character.name %></p>
+  <p>LOSER: <%= @fight.losing_character.name %></p>
+<% end %>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Current fighter</th>
+      <th>Damage</th>
+      <th><%= @fight.fighter_left.name %> HP</th>
+      <th><%= @fight.fighter_left.name %> score</th>
+      <th><%= @fight.fighter_right.name %> score</th>
+      <th><%= @fight.fighter_right.name %> HP</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fight.actions.each do |action| %>
+      <tr>
+        <td><%= action.character&.name %></td>
+        <td><%= action.damage %></td>
+        <td><%= action.left_hp %></td>
+        <td><%= action.fighter_left_score %></td>
+        <td><%= action.fighter_right_score %></td>
+        <td><%= action.right_hp %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
