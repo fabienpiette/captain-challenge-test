@@ -22,7 +22,8 @@ module CaptainChallenge
     # Load Paths
     #
     lib_paths = Dir[
-      Rails.root.join('lib', '**', '*').to_s
+      Rails.root.join('lib').to_s,
+      Rails.root.join('lib', 'strategies').to_s
     ]
     config.autoload_paths   += lib_paths
     config.eager_load_paths += lib_paths
