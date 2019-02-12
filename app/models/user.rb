@@ -19,6 +19,11 @@ class User < ApplicationRecord
   #
   # Associations
   #
+  has_many :characters,
+           class_name: 'Character',
+           foreign_key: 'user_id',
+           dependent: :destroy,
+           inverse_of: :owner
 
   #
   # Through Associations

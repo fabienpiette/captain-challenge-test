@@ -1,9 +1,7 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
-
 <% if user_signed_in? %>
   <%= current_user.email %>
   <%= link_to 'List characters', characters_path %>
+  <%= link_to 'List fights', fights_path %>
 <% end %>
 
 <% if user_signed_in? %>
@@ -13,6 +11,4 @@
   <%= link_to 'Sign in', new_user_session_path %>
   <%= link_to 'Sign up', new_user_registration_path %>
 <% end %>
-
-
 

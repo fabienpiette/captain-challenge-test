@@ -1,4 +1,4 @@
-<%= simple_form_for character do |f| %>
+<%= simple_form_for(character) do |f| %>
   <% if character.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(character.errors.count, "error") %> prohibited this character from being saved:</h2>
@@ -12,8 +12,6 @@
   <% end %>
 
   <%= f.input :name %>
-  <%= f.input :health_points %>
-  <%= f.input :attack_points %>
 
   <div class="actions">
     <%= f.button :submit %>

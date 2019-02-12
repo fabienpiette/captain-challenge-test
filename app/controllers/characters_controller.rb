@@ -5,7 +5,7 @@ class CharactersController < ApplicationController
 
   # GET /characters
   def index
-    @characters = Character.all
+    @characters = current_user.characters
   end
 
   # GET /characters/1
@@ -13,7 +13,7 @@ class CharactersController < ApplicationController
 
   # GET /characters/new
   def new
-    @character = Character.new
+    @character = current_user.characters.new
   end
 
   # GET /characters/1/edit
@@ -21,7 +21,7 @@ class CharactersController < ApplicationController
 
   # POST /characters
   def create
-    @character = Character.new(character_params)
+    @character = current_user.characters.new(character_params)
 
     respond_to do |format|
       if @character.save
@@ -60,13 +60,13 @@ class CharactersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_character
-    @character = Character.find(params[:id])
+    @character = current_user.characters.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def character_params
     params
       .require(:character)
-      .permit(%i[name health_points attack_points])
+      .permit(%i[name])
   end
 end

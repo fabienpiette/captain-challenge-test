@@ -9,29 +9,27 @@ class Character < ApplicationRecord
             :attack_points,
             presence: true
 
-  validates :health_points,
-            numericality: {
-              greater_than_or_equal_to: 1,
-              less_than_or_equal_to: 9
-            },
-            on: :create
-
-  validates :attack_points,
-            numericality: {
-              greater_than_or_equal_to: 1,
-              less_than_or_equal_to: 9
-            },
-            on: :create
-
-  validate :points_balancing?, on: :create
-
   #
   # Associations
   #
+  belongs_to :owner,
+             class_name: 'User',
+             foreign_key: 'user_id',
+             inverse_of: :characters,
+             optional: true
+
+  has_many :fighters,
+           class_name: 'Fights::Fighter',
+           foreign_key: 'character_id',
+           dependent: :destroy,
+           inverse_of: :character
 
   #
   # Through Associations
   #
+  has_many :fights,
+           class_name: 'Fight',
+           through: :fighters
 
   #
   # Callbacks
@@ -56,14 +54,7 @@ class Character < ApplicationRecord
   #
   # Protected instance methods
   #
-  protected
-
-  def points_balancing?
-    return true if attack_points + health_points == 10
-
-    errors[:base] << 'Your character is too unbalanced, you only have 10 '\
-                     'points to divide between your health and your attack.'
-  end
+  # protected
 end
 
 # == Schema Information
@@ -71,9 +62,14 @@ end
 # Table name: characters
 #
 #  id            :bigint(8)        not null, primary key
-#  attack_points :integer          default(5), not null
-#  health_points :integer          default(5), not null
+#  attack_points :integer          default(1), not null
+#  health_points :integer          default(20), not null
 #  name          :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  user_id       :bigint(8)
+#
+# Indexes
+#
+#  index_characters_on_user_id  (user_id)
 #

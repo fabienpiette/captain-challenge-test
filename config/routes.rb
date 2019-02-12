@@ -3,7 +3,9 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :characters
+  resources :characters do
+    resources :fights, shallow: true
+  end
 
   root 'welcome#index'
 end

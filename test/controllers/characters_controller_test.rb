@@ -6,8 +6,10 @@ class CharactersControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    @character = characters(:one)
-    sign_in users(:one)
+    user = users(:one)
+    sign_in(user)
+
+    @character = user.characters.create(name: 'Foo')
   end
 
   test 'should get index' do
@@ -26,9 +28,7 @@ class CharactersControllerTest < ActionDispatch::IntegrationTest
         characters_url,
         params: {
           character: {
-            name: 'Foo',
-            health_points: 5,
-            attack_points: 5
+            name: 'Foo'
           }
         }
       )

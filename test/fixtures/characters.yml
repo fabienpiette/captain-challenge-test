@@ -15,9 +15,14 @@ two:
 # Table name: characters
 #
 #  id            :bigint(8)        not null, primary key
-#  attack_points :integer          default(5), not null
-#  health_points :integer          default(5), not null
+#  attack_points :integer          default(1), not null
+#  health_points :integer          default(20), not null
 #  name          :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  user_id       :bigint(8)
+#
+# Indexes
+#
+#  index_characters_on_user_id  (user_id)
 #
