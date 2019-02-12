@@ -2,6 +2,6 @@
 
 10.times do
   Character.create(
-    name: Faker::Witcher.character
+    name: Faker::Games::Witcher.character
   )
 end

@@ -40,8 +40,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'devise'
 gem 'faker'
-gem 'simple_form'
 gem 'jquery-rails'
+gem 'simple_form'
 # gem 'bootstrap-sass'
 gem 'bootstrap', '~> 4.2.1'
 

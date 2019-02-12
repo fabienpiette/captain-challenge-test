@@ -59,8 +59,8 @@ header.masthead {
   overflow: hidden;
   padding-top: calc(7rem + 72px);
   padding-bottom: 7rem;
-  background: -webkit-gradient(linear, left bottom, left top, from(#ff6a00), to(#ee0979));
-  background: linear-gradient(0deg, #ff6a00 0%, #ee0979 100%);
+  background: -webkit-gradient(linear, left bottom, left top, from(#e7e7db), to(#9d0a0e));
+  background: linear-gradient(0deg, #e7e7db 0%, #9d0a0e 100%);
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: scroll;
@@ -84,8 +84,8 @@ header.masthead .bg-circle {
   z-index: 0;
   position: absolute;
   border-radius: 100%;
-  background: -webkit-gradient(linear, left bottom, left top, from(#ee0979), to(#ff6a00));
-  background: linear-gradient(0deg, #ee0979 0%, #ff6a00 100%);
+  background: -webkit-gradient(linear, left bottom, left top, from(#9d0a0e), to(#e7e7db));
+  background: linear-gradient(0deg, #9d0a0e 0%, #e7e7db 100%);
 }
 
 header.masthead .bg-circle-1 {
@@ -130,17 +130,17 @@ header.masthead .bg-circle-4 {
 }
 
 .bg-primary {
-  background-color: #ee0979 !important;
+  background-color: #9d0a0e !important;
 }
 
 .btn-primary {
-  background-color: #ee0979;
-  border-color: #ee0979;
+  background-color: #9d0a0e;
+  border-color: #9d0a0e;
 }
 
 .btn-primary:active, .btn-primary:focus, .btn-primary:hover {
-  background-color: #bd0760 !important;
-  border-color: #bd0760 !important;
+  background-color: #000000 !important;
+  border-color: #000000 !important;
 }
 
 .btn-primary:focus {
@@ -149,8 +149,8 @@ header.masthead .bg-circle-4 {
 }
 
 .btn-secondary {
-  background-color: #ff6a00;
-  border-color: #ff6a00;
+  background-color: #e7e7db;
+  border-color: #e7e7db;
 }
 
 .btn-secondary:active, .btn-secondary:focus, .btn-secondary:hover {
