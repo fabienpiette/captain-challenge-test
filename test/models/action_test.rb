@@ -3,9 +3,60 @@
 require 'test_helper'
 
 class ActionTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
+  #
+  # Setups
+  #
+  def setup
+    @action = actions(:one)
+  end
+
+  #
+  # Validations
+  #
+  test 'valid action' do
+    assert @action.valid?
+  end
+
+  test 'invalid without fighter_left_score' do
+    action = actions(:one)
+    action.fighter_left_score = nil
+
+    assert_not @action.valid?, 'action is valid without a fighter_left_score'
+    assert_not_nil @action.errors[:fighter_left_score], 'no validation error for fighter_left_score present'
+  end
+
+  test 'invalid without fighter_right_score' do
+    action = actions(:one)
+    action.fighter_right_score = nil
+
+    assert_not @action.valid?, 'action is valid without a fighter_right_score'
+    assert_not_nil @action.errors[:fighter_right_score], 'no validation error for fighter_right_score present'
+  end
+
+  test 'invalid without fight' do
+    action = actions(:one)
+    action.fight = nil
+
+    assert_not @action.valid?, 'action is valid without a fight'
+    assert_not_nil @action.errors[:fight], 'no validation error for fight present'
+  end
+
+  #
+  # Scopes
+  #
+  # test '#opponent' do
+  #   character         = characters(:one)
+  #   @action.character = character
+  #   assert_includes Action.opponent(character), @action
+  #   refute_includes Action.opponent(character), actions(:two)
   # end
+  test '#with_fighter' do
+    character         = characters(:one)
+    @action.character = character
+
+    assert_includes Action.with_fighter(character), @action
+    refute_includes Action.with_fighter(character), actions(:two)
+  end
 end
 
 # == Schema Information

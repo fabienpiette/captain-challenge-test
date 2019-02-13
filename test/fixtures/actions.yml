@@ -6,8 +6,8 @@ one:
   damage: 1
   left_hp: 1
   right_hp: 1
-  character:
-  fight:
+  character: one
+  fight: one
 
 two:
   fighter_left_score: 1
@@ -15,8 +15,8 @@ two:
   damage: 1
   left_hp: 1
   right_hp: 1
-  character:
-  fight:
+  character: two
+  fight: two
 
 # == Schema Information
 #

@@ -129,7 +129,8 @@ class Fight < ApplicationRecord
   end
 
   def health_points(character)
-    character.health_points - actions.opponent(character).sum(&:damage)
+    # character.health_points - actions.opponent(character).sum(&:damage)
+    character.health_points - actions.with_fighter(opposite_character(character)).sum(&:damage)
   end
 
   def name

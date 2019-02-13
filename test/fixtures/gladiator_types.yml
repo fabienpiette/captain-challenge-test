@@ -5,12 +5,16 @@ one:
   description: MyText
   base_attack_points: 1
   base_health_points: 1
+  constitution: 1
+  dexterity: 1
 
 two:
   name: MyString
   description: MyText
   base_attack_points: 1
   base_health_points: 1
+  constitution: 1
+  dexterity: 1
 
 # == Schema Information
 #

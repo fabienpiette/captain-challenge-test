@@ -4,6 +4,9 @@ class Action < ApplicationRecord
   #
   # Validations
   #
+  validates :fighter_left_score,
+            :fighter_right_score,
+            presence: true
 
   #
   # Associations
@@ -29,11 +32,14 @@ class Action < ApplicationRecord
   #
   # Scopes
   #
-  scope :opponent, lambda { |character|
-    where(
-      'current_fighter_id IS NOT NULL AND current_fighter_id <> ?',
-      character.id
-    )
+  # scope :opponent, lambda { |character|
+  #   where(
+  #     'current_fighter_id IS NOT NULL AND current_fighter_id <> ?',
+  #     character.id
+  #   )
+  # }
+  scope :with_fighter, lambda { |character|
+    where(current_fighter_id: character.id)
   }
 
   #
