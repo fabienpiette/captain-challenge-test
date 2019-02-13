@@ -1,0 +1,25 @@
+---
+- name: Thraex
+  base_health_points: 15
+  base_attack_points: 5
+  dexterity: 2
+  constitution: 2
+  picture: thrace.jpg
+  description: |
+    The Thraex wore the same protective armour as the hoplomachi with a broad rimmed helmet that enclosed the entire head, distinguished by a stylized griffin on the protome or front of the crest, a small round or square-shaped shield, and two thigh-length greaves. His weapon was the Thracian curved sword. They were introduced as replacements for the Gauls after Gaul made peace with Rome. They commonly fought Myrmillones or Hoplomachi.
+- name: Murmillo
+  base_health_points: 16
+  base_attack_points: 4
+  dexterity: 1
+  constitution: 4
+  picture: mirmillon.jpg
+  description: |
+    The murmillo wore a helmet with a stylised fish on the crest, as well as an arm guard, a loincloth and belt, a gaiter on his right leg, thick wrappings covering the tops of his feet, and a very short greave with an indentation for the padding at the top of the feet. They are heavily armoured gladiators: the murmillo carried a gladius and a tall, oblong shield in the legionary style.
+- name: Retiarius
+  base_health_points: 14
+  base_attack_points: 6
+  dexterity: 4
+  constitution: 1
+  picture: retiaire.jpg
+  description: |
+    The retiarius carried a trident and a net, equipment styled on that of a fisherman. The retiarius wore a loincloth held in place by a wide belt and a larger arm guard extending to the shoulder and left side of the chest. He fought without the protection of a helmet.

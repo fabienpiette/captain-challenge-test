@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     post :take_turn, on: :member
   end
 
-  resources :characters do
+  resources :characters, except: %i[show] do
     resources :fights, shallow: true, except: %i[edit]
   end
 

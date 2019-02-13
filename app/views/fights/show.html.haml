@@ -1,0 +1,45 @@
+.container.container-captain
+  .d-flex.justify-content-center
+    %h1= "#{@fight.fighter_left&.name} VS #{@fight.fighter_right&.name}"
+  %hr.hr-captain-challenge
+  .d-flex.justify-content-center
+    - unless @fight.launched?
+      = link_to 'Launch', launch_fight_path(@fight), method: :post, class: 'btn btn-primary'
+
+    - if @fight.launched? && !@fight.finished?
+      = link_to 'Next turn', take_turn_fight_path(@fight), method: :post, class: 'btn btn-primary'
+
+    - if @fight.finished?
+      %p= "#{@fight.winning_character.name} won"
+  %hr.hr-captain-challenge
+
+  -# %p#notice= notice
+
+  .row
+    .col-md-4
+      = render 'characters/card', character: @fight.fighter_left do
+        .progress
+          .progress-bar.bg-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{@fight.percent_hp(@fight.fighter_left)}", :role => "progressbar", :style => "width: #{@fight.percent_hp(@fight.fighter_left)}%;"}= "#{@fight.health_points(@fight.fighter_left)}/#{@fight.fighter_left.health_points}"
+    .col-md-4
+      %table.table
+        %thead
+          %tr
+            %th{ scope: 'col' } Current fighter
+            %th{ scope: 'col' } Damage
+            %th{ scope: 'col' }
+              = @fight.fighter_left.name
+              score
+            %th{ scope: 'col' }
+              = @fight.fighter_right.name
+              score
+        %tbody
+          - @fight.actions.each do |action|
+            %tr
+              %td{ scope: 'row' }= action.character&.name
+              %td= action.damage
+              %td= action.fighter_left_score
+              %td= action.fighter_right_score
+    .col-md-4
+      = render 'characters/card', character: @fight.fighter_right do
+        .progress
+          .progress-bar.bg-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{@fight.percent_hp(@fight.fighter_right)}", :role => "progressbar", :style => "width: #{@fight.percent_hp(@fight.fighter_right)}%;"}= "#{@fight.health_points(@fight.fighter_right)}/#{@fight.fighter_right.health_points}"

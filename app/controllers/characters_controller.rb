@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
 class CharactersController < ApplicationController
-  before_action :set_character, only: %i[show edit update destroy]
+  before_action :set_character, only: %i[edit update destroy]
 
   # GET /characters
   def index
     @characters = current_user.characters
   end
 
-  # GET /characters/1
-  def show; end
-
   # GET /characters/new
   def new
     @character = current_user.characters.new
+    @character.equipments.build
   end
 
   # GET /characters/1/edit
-  def edit; end
+  def edit
+    @character.equipments.build if @character.equipments.blank?
+  end
 
   # POST /characters
   def create
@@ -25,7 +25,7 @@ class CharactersController < ApplicationController
 
     respond_to do |format|
       if @character.save
-        format.html { redirect_to @character, notice: 'Character was successfully created.' }
+        format.html { redirect_to characters_url, notice: 'Character was successfully created.' }
       else
         format.html { render :new }
       end
@@ -36,7 +36,7 @@ class CharactersController < ApplicationController
   def update
     respond_to do |format|
       if @character.update(character_params)
-        format.html { redirect_to @character, notice: 'Character was successfully updated.' }
+        format.html { redirect_to [:edit, @character], notice: 'Character was successfully updated.' }
       else
         format.html { render :edit }
       end
@@ -62,6 +62,12 @@ class CharactersController < ApplicationController
   def character_params
     params
       .require(:character)
-      .permit(%i[name])
+      .permit([
+                :name,
+                :gladiator_type_id,
+                :avatar,
+                :weapon_ids,
+                :shield_ids
+              ])
   end
 end

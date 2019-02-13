@@ -1,0 +1,18 @@
+= simple_form_for([:character, fight]) do |f|
+  = yield(f) if block_given?
+
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .row
+    .col
+      = f.association :fighter_left, as: :hidden
+      = render 'characters/card', character: f.object.fighter_left
+    .col
+      = image_tag 'vs.png', alt: ''
+    .col
+      = f.association :fighter_right, collection: Character.all.where.not(id: f.object.fighter_left.id), include_blank: false, label: false
+
+  - unless block_given?
+    .form-actions
+      = f.button :submit

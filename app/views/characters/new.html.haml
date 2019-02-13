@@ -1,0 +1,8 @@
+.container.container-captain
+  = render 'form', character: @character do |f|
+    .row
+      .col-sm
+        %h1 New Character
+      .col-sm
+        = f.button :submit, 'Save', class: 'btn btn-primary float-right'
+    %hr.hr-captain-challenge

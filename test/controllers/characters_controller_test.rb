@@ -7,9 +7,13 @@ class CharactersControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     user = users(:one)
+    @gladiator = gladiator_types(:one)
     sign_in(user)
 
-    @character = user.characters.create(name: 'Foo')
+    @character = user.characters.create(
+      name: 'Foo',
+      gladiator_type: @gladiator
+    )
   end
 
   test 'should get index' do
@@ -28,18 +32,14 @@ class CharactersControllerTest < ActionDispatch::IntegrationTest
         characters_url,
         params: {
           character: {
-            name: 'Foo'
+            name: 'Foo',
+            gladiator_type_id: @gladiator.id
           }
         }
       )
     end
 
-    assert_redirected_to character_url(Character.last)
-  end
-
-  test 'should show character' do
-    get character_url(@character)
-    assert_response :success
+    assert_redirected_to characters_url
   end
 
   test 'should get edit' do
@@ -56,7 +56,7 @@ class CharactersControllerTest < ActionDispatch::IntegrationTest
         }
       }
     )
-    assert_redirected_to character_url(@character)
+    assert_redirected_to edit_character_url(@character)
   end
 
   test 'should destroy character' do

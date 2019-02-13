@@ -1,0 +1,25 @@
+.container.container-captain
+  .row
+    .col-sm
+      %h1= @character.name
+
+  %hr.hr-captain-challenge
+  %ul#myTab.nav.nav-tabs{:role => "tablist"}
+    %li.nav-item
+      %a#general-tab.nav-link.active{"aria-controls" => "general", "aria-selected" => "true", "data-toggle" => "tab", :href => "#general", :role => "tab"} General
+    %li.nav-item
+      %a#stats-tab.nav-link{"aria-controls" => "stats", "aria-selected" => "false", "data-toggle" => "tab", :href => "#stats", :role => "tab"} Stats
+  %hr.hr-captain-challenge
+
+  #myTabContent.tab-content
+    #general.tab-pane.fade.show.active{"aria-labelledby" => "general-tab", :role => "tabpanel"}
+      = render 'form', character: @character do |f|
+        = f.button :submit, 'Save', class: 'btn btn-primary float-right'
+    #stats.tab-pane.fade{"aria-labelledby" => "stats-tab", :role => "tabpanel"}
+      .row
+        .col
+          = line_chart @character.fights.group_by_day(:created_at).count, ytitle: "Number of fights"
+        .col
+          = pie_chart({"Won" => @character.fights.won(@character).count, "Loses" => @character.fights.loses(@character).count})
+
+

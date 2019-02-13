@@ -74,3 +74,44 @@ header.masthead {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.hr-captain-challenge {
+  border: none;
+  border-top: 3px solid #9d0a0e;
+  color: #9d0a0e;
+  overflow: visible;
+  text-align: center;
+  height: 5px;
+}
+
+.characters-listing-primary {
+  font-size: 24px;
+  color: #242527;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.characters-listing-secondary {
+    font-size: 15px;
+    color: #242527;
+}
+
+.character-card-links-item {
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 0.2rem;
+}
+
+label {
+  cursor: pointer;
+  filter: grayscale(100%);
+}
+
+label:hover {
+  filter: grayscale(0);
+}
+input[type="radio"]:checked + label {
+  filter: grayscale(0);
+}

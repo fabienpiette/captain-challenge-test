@@ -1,0 +1,56 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Captain Challenge
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    %link{:crossorigin => "anonymous", :href => "https://use.fontawesome.com/releases/v5.7.2/css/all.css", :integrity => "sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr", :rel => "stylesheet"}/
+
+    / Latest compiled and minified CSS
+    %link{:crossorigin => "anonymous", :href => "https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css", :integrity => "sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS", :rel => "stylesheet"}/
+    / Bootstrap core CSS
+    %link{:href => "https://blackrockdigital.github.io/startbootstrap-one-page-wonder/vendor/bootstrap/css/bootstrap.min.css", :rel => "stylesheet"}/
+    / Custom fonts for this template
+    %link{:href => "https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900", :rel => "stylesheet"}/
+    %link{:href => "https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i", :rel => "stylesheet"}/
+    / Custom styles for this template
+    / <link href="https://blackrockdigital.github.io/startbootstrap-one-page-wonder/css/one-page-wonder.min.css" rel="stylesheet">
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+    / Navigation
+    %nav.navbar.navbar-expand-lg.navbar-dark.navbar-custom.fixed-top
+      .container
+        = link_to 'Captain Challenge', root_path, class: 'navbar-brand'
+        %button.navbar-toggler{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
+          %span.navbar-toggler-icon
+        #navbarResponsive.collapse.navbar-collapse
+          %ul.navbar-nav.ml-auto
+            - if user_signed_in?
+              %li.nav-item
+                = link_to 'List characters', characters_path, class: 'nav-link'
+              %li.nav-item
+                = link_to 'List fights', fights_path, class: 'nav-link'
+              %li.nav-item
+                = link_to 'Edit account', edit_user_registration_path, class: 'nav-link'
+              %li.nav-item
+                = link_to 'Sign out', destroy_user_session_path, method: 'delete', class: 'nav-link'
+            - else
+              %li.nav-item
+                = link_to 'Sign up', new_user_registration_path, class: 'nav-link'
+              %li.nav-item
+                = link_to 'Log In', new_user_session_path, class: 'nav-link'
+    /
+      <p class="notice"><haml_loud> notice </haml_loud></p>
+      <p class="alert"><haml_loud> alert </haml_loud></p>
+    = yield
+    / Footer
+    %footer.py-5.bg-black
+      .container
+        %p.m-0.text-center.text-white.small Copyright © Your Website 2019
+      / /.container
+    / Bootstrap core JavaScript
+    %script{:src => "https://blackrockdigital.github.io/startbootstrap-one-page-wonder/vendor/jquery/jquery.min.js"}
+    %script{:src => "https://blackrockdigital.github.io/startbootstrap-one-page-wonder/vendor/bootstrap/js/bootstrap.bundle.min.js"}

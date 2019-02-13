@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_12_110348) do
+ActiveRecord::Schema.define(version: 2019_02_13_143003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,23 +29,52 @@ ActiveRecord::Schema.define(version: 2019_02_12_110348) do
     t.index ["fight_id"], name: "index_actions_on_fight_id"
   end
 
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
   create_table "characters", force: :cascade do |t|
     t.string "name", null: false
+    t.integer "capacity_points", default: 0, null: false
+    t.integer "xp_points", default: 0, null: false
+    t.integer "level", default: 1, null: false
     t.integer "health_points", default: 20, null: false
     t.integer "attack_points", default: 1, null: false
+    t.integer "dexterity", default: 1, null: false
+    t.integer "constitution", default: 1, null: false
     t.bigint "user_id"
+    t.bigint "gladiator_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["gladiator_type_id"], name: "index_characters_on_gladiator_type_id"
     t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
   create_table "equipment", force: :cascade do |t|
-    t.bigint "weapon_id"
+    t.string "usable_type"
+    t.bigint "usable_id"
     t.bigint "character_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["character_id"], name: "index_equipment_on_character_id"
-    t.index ["weapon_id"], name: "index_equipment_on_weapon_id"
+    t.index ["usable_type", "usable_id"], name: "index_equipment_on_usable_type_and_usable_id"
   end
 
   create_table "fights", force: :cascade do |t|
@@ -59,6 +88,24 @@ ActiveRecord::Schema.define(version: 2019_02_12_110348) do
     t.index ["fighter_right_id"], name: "index_fights_on_fighter_right_id"
     t.index ["losing_character_id"], name: "index_fights_on_losing_character_id"
     t.index ["winning_character_id"], name: "index_fights_on_winning_character_id"
+  end
+
+  create_table "gladiator_types", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.integer "base_attack_points", null: false
+    t.integer "base_health_points", null: false
+    t.integer "dexterity", null: false
+    t.integer "constitution", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "shields", force: :cascade do |t|
+    t.string "name"
+    t.integer "defense"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -80,4 +127,5 @@ ActiveRecord::Schema.define(version: 2019_02_12_110348) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
 end

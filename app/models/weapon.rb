@@ -8,11 +8,7 @@ class Weapon < ApplicationRecord
   #
   # Associations
   #
-  has_many :equipments,
-           class_name: 'Equipment',
-           foreign_key: 'equipment_id',
-           dependent: :destroy,
-           inverse_of: :weapon
+  has_many :equipments, as: :usables
 
   #
   # Through Associations

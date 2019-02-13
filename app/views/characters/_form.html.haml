@@ -1,0 +1,81 @@
+= simple_form_for(character) do |f|
+  = yield(f) if block_given?
+
+  .row
+    .col
+      - if character.avatar.attached?
+        = image_tag(Rails.application.routes.url_helpers.rails_blob_path(character.avatar, only_path: true), style: 'height: 300px')
+      = f.input :avatar, label: false
+    .col
+      %table.table
+        %tbody
+          %tr
+            %th{:scope => "row"} Name
+            %td= f.input :name, label: false
+          %tr
+            %th{:scope => "row"} Weapon
+            %td
+              = f.input :weapon_ids, collection: Weapon.all, multiple: true, label: false
+          %tr
+            %th{:scope => "row"} Shield
+            %td
+              = f.input :shield_ids, collection: Shield.all, multiple: false, label: false
+          %tr
+            %th{:scope => "row"} Type
+            %td= character.gladiator_type&.name
+          %tr
+            %th{:scope => "row"} Level
+            %td= character.level
+          %tr
+            %th{:scope => "row"} Attack
+            %td= character.attack_points
+          %tr
+            %th{:scope => "row"} Healt
+            %td= character.health_points
+          %tr
+            %th{:scope => "row"} Constitution
+            %td= character.constitution
+          %tr
+            %th{:scope => "row"} Dexterity
+            %td= character.dexterity
+          %tr
+            %th{:scope => "row"} Points
+            %td= character.capacity_points
+          %tr
+            %th{:scope => "row"} XP
+            %td= character.xp_points
+
+  - if f.object.new_record?
+    %h6 Choose a gladiator:
+    = f.collection_radio_buttons :gladiator_type_id, GladiatorType.all, :id, :name, item_wrapper_class: 'horizontal' do |gladiator_form|
+      = gladiator_form.label(style: 'margin: 2%') do
+        .card{:style => "width: 18rem;"}
+          .card-header
+            %h5.card-title
+              = gladiator_form.object.name
+              = gladiator_form.radio_button class: 'float-right'
+            .card-subtitle.mb-2.text-muted
+              .row
+                .col-md-3
+                  %i.fas.fa-heart
+                  = gladiator_form.object.base_health_points
+                .col-md-3
+                  %i.fas.fa-fist-raised
+                  = gladiator_form.object.base_attack_points
+                .col-md-3
+                  %i.fas.fa-shield-alt
+                  = gladiator_form.object.constitution
+                .col-md-3
+                  %i.fas.fa-running
+                  = gladiator_form.object.dexterity
+          - if gladiator_form.object.avatar.attached?
+            = image_tag(Rails.application.routes.url_helpers.rails_blob_path(gladiator_form.object.avatar, only_path: true), style: 'height: 300px')
+          - else
+            = image_tag 'unknow.jpg', class: "card-img-top", alt: ''
+          .card-body
+            %p.card-text= gladiator_form.object.description
+
+  - unless block_given?
+    .actions
+      = f.button :submit
+

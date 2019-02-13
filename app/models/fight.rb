@@ -47,6 +47,13 @@ class Fight < ApplicationRecord
   #
   # Scopes
   #
+  scope :won, lambda { |character|
+    where(winning_character: character)
+  }
+
+  scope :loses, lambda { |character|
+    where(losing_character_id: character)
+  }
 
   #
   # Supports
@@ -59,24 +66,6 @@ class Fight < ApplicationRecord
   #
   # Public instance methods
   #
-  # def process
-  #   while fighter_left.alive? && fighter_right.alive?
-  #     fighter_left_score  = fighter_left.fight_strategy.process
-  #     fighter_right_score = fighter_right.fight_strategy.process
-  #     if fighter_left_score > fighter_right_score
-  #       Rails.logger.info 'Hero touch'
-  #       fighter_right.wound(fighter_left.damage)
-  #     elsif fighter_left_score < fighter_right_score
-  #       Rails.logger.info 'Monster touch'
-  #       fighter_left.wound(fighter_right.damage)
-  #     elsif fighter_left_score == fighter_right_score
-  #       # Nothing
-  #       Rails.logger.info 'Miss'
-  #     end
-  #   end
-  #   Rails.logger.info 'Fight ending'
-  # end
-
   def launch
     Rails.logger.info "-- Launch fight between #{fighter_left.name} and #{fighter_right.name}"
 
@@ -90,15 +79,29 @@ class Fight < ApplicationRecord
     return if finished?
 
     if fighter_left_score > fighter_right_score
-      wound(fighter_right, fighter_left.damage, :right)
+      wound(
+        fighter_right,
+        damage_with(fighter_left, fighter_right),
+        :right
+      )
     elsif fighter_left_score < fighter_right_score
-      wound(fighter_left, fighter_right.damage, :left)
+      wound(
+        fighter_left,
+        damage_with(fighter_right, fighter_left),
+        :left
+      )
     elsif fighter_left_score == fighter_right_score
       miss
     end
 
     clean
     finished if finished?
+  end
+
+  def damage_with(forward, defender)
+    damage = forward.damage - defender.constitution
+    damage = 0 if damage < 0
+    damage
   end
 
   def launched?
@@ -121,6 +124,18 @@ class Fight < ApplicationRecord
     fighter_right if dead?(fighter_right) && alive?(fighter_left)
   end
 
+  def percent_hp(character)
+    (health_points(character) * 100) / character.health_points
+  end
+
+  def health_points(character)
+    character.health_points - actions.opponent(character).sum(&:damage)
+  end
+
+  def name
+    "#{fighter_left&.name} VS #{fighter_right&.name}"
+  end
+
   #
   # Protected instance methods
   #
@@ -131,6 +146,10 @@ class Fight < ApplicationRecord
       winning_character: winner,
       losing_character: loser
     )
+    winning_character.xp_points += 2
+    losing_character.xp_points  += 1
+
+    winning_character.save
   end
 
   def clean
@@ -177,10 +196,6 @@ class Fight < ApplicationRecord
 
   def fighter_right_score
     @fighter_right_score ||= fighter_right.fight_strategy.process
-  end
-
-  def health_points(character)
-    character.health_points - actions.opponent(character).sum(&:damage)
   end
 
   def dead?(character)

@@ -30,7 +30,7 @@ class FightsController < ApplicationController
     @fight = Fight.new(fight_params)
 
     respond_to do |format|
-      if @fight.save
+      if @fight.save!
         format.html { redirect_to @fight, notice: 'Fight was successfully created.' }
       else
         format.html { render :new }
@@ -89,6 +89,9 @@ class FightsController < ApplicationController
   def fight_params
     params
       .require(:fight)
-      .permit(%i[fighter_left_id fighter_right_id])
+      .permit(%i[
+                fighter_right_id
+                fighter_left_id
+              ])
   end
 end
