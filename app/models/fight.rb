@@ -99,7 +99,7 @@ class Fight < ApplicationRecord
   end
 
   def damage_with(forward, defender)
-    damage = forward.damage - defender.constitution
+    damage = forward.damage - defender.defense
     damage = 0 if damage < 0
     damage
   end

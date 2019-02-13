@@ -2,7 +2,6 @@
   .card-header
     %h5.card-title
       = character.name
-      .float-right= link_to 'Edit', edit_character_path(character), class: 'btn btn-sm btn-info character-card-links-item'
     .card-subtitle.mb-2.text-muted
       = character.gladiator_type.name
       .float-right= "Lvl #{character.level}"

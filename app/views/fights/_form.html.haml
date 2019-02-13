@@ -7,7 +7,10 @@
   .row
     .col
       = f.association :fighter_left, as: :hidden
-      = render 'characters/card', character: f.object.fighter_left
+      = render 'characters/card', character: f.object.fighter_left do
+        .card-footer.text-muted
+          = link_to 'Edit', edit_character_path(f.object.fighter_left), class: 'btn btn-info character-card-links-item'
+
     .col
       = image_tag 'vs.png', alt: ''
     .col

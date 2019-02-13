@@ -24,8 +24,10 @@
     %nav.navbar.navbar-expand-lg.navbar-dark.navbar-custom.fixed-top
       .container
         = link_to 'Captain Challenge', root_path, class: 'navbar-brand'
+
         %button.navbar-toggler{"aria-controls" => "navbarResponsive", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarResponsive", "data-toggle" => "collapse", :type => "button"}
           %span.navbar-toggler-icon
+
         #navbarResponsive.collapse.navbar-collapse
           %ul.navbar-nav.ml-auto
             - if user_signed_in?
@@ -34,17 +36,17 @@
               %li.nav-item
                 = link_to 'List fights', fights_path, class: 'nav-link'
               %li.nav-item
-                = link_to 'Edit account', edit_user_registration_path, class: 'nav-link'
+                = link_to 'Account', edit_user_registration_path, class: 'nav-link'
               %li.nav-item
                 = link_to 'Sign out', destroy_user_session_path, method: 'delete', class: 'nav-link'
+
             - else
               %li.nav-item
                 = link_to 'Sign up', new_user_registration_path, class: 'nav-link'
               %li.nav-item
                 = link_to 'Log In', new_user_session_path, class: 'nav-link'
-    /
-      <p class="notice"><haml_loud> notice </haml_loud></p>
-      <p class="alert"><haml_loud> alert </haml_loud></p>
+
+    = render 'layouts/messages'
     = yield
     / Footer
     %footer.py-5.bg-black

@@ -2,6 +2,9 @@
   .row
     .col-sm
       %h1= @character.name
+    .col-sm
+      .float-right
+        = link_to 'Fight', new_character_fight_path(@character), class: 'btn btn-info character-card-links-item'
 
   %hr.hr-captain-challenge
   %ul#myTab.nav.nav-tabs{:role => "tablist"}
@@ -13,6 +16,7 @@
 
   #myTabContent.tab-content
     #general.tab-pane.fade.show.active{"aria-labelledby" => "general-tab", :role => "tabpanel"}
+
       = render 'form', character: @character do |f|
         = f.button :submit, 'Save', class: 'btn btn-primary float-right'
     #stats.tab-pane.fade{"aria-labelledby" => "stats-tab", :role => "tabpanel"}

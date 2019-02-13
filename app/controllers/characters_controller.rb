@@ -25,8 +25,9 @@ class CharactersController < ApplicationController
 
     respond_to do |format|
       if @character.save
-        format.html { redirect_to characters_url, notice: 'Character was successfully created.' }
+        format.html { redirect_to characters_url, success: 'Character was successfully created.' }
       else
+        flash[:danger] = @character.errors.full_messages.join('. ')
         format.html { render :new }
       end
     end
@@ -36,7 +37,7 @@ class CharactersController < ApplicationController
   def update
     respond_to do |format|
       if @character.update(character_params)
-        format.html { redirect_to [:edit, @character], notice: 'Character was successfully updated.' }
+        format.html { redirect_to [:edit, @character], success: 'Character was successfully updated.' }
       else
         format.html { render :edit }
       end
@@ -47,7 +48,7 @@ class CharactersController < ApplicationController
   def destroy
     @character.destroy
     respond_to do |format|
-      format.html { redirect_to characters_url, notice: 'Character was successfully destroyed.' }
+      format.html { redirect_to characters_url, success: 'Character was successfully destroyed.' }
     end
   end
 

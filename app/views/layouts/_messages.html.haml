@@ -1,0 +1,7 @@
+.d-flex.justify-content-center
+  - flash.each do |key, value|
+    %div{:class => "alert flash-captain alert-#{key}"}
+      %a.close{"data-dismiss" => "alert", :href => "#"} ×
+      %ul
+        %li
+          = value

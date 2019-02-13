@@ -1,6 +1,9 @@
 .container.container-captain
   .d-flex.justify-content-center
     %h1= "#{@fight.fighter_left&.name} VS #{@fight.fighter_right&.name}"
+  - if @fight.finished?
+    .d-flex.justify-content-center
+      %h5.text-success= "#{@fight.winning_character.name} won"
   %hr.hr-captain-challenge
   .d-flex.justify-content-center
     - unless @fight.launched?
@@ -10,10 +13,8 @@
       = link_to 'Next turn', take_turn_fight_path(@fight), method: :post, class: 'btn btn-primary'
 
     - if @fight.finished?
-      %p= "#{@fight.winning_character.name} won"
+      = link_to 'Done', edit_character_path(@fight.winning_character), class: 'btn btn-primary'
   %hr.hr-captain-challenge
-
-  -# %p#notice= notice
 
   .row
     .col-md-4
@@ -24,7 +25,7 @@
       %table.table
         %thead
           %tr
-            %th{ scope: 'col' } Current fighter
+            %th{ scope: 'col' } Touch for
             %th{ scope: 'col' } Damage
             %th{ scope: 'col' }
               = @fight.fighter_left.name
@@ -37,8 +38,8 @@
             %tr
               %td{ scope: 'row' }= action.character&.name
               %td= action.damage
-              %td= action.fighter_left_score
-              %td= action.fighter_right_score
+              %td{ class: score_color(action.fighter_left_score, action.fighter_right_score) }= action.fighter_left_score
+              %td{ class: score_color(action.fighter_right_score, action.fighter_left_score) }= action.fighter_right_score
     .col-md-4
       = render 'characters/card', character: @fight.fighter_right do
         .progress

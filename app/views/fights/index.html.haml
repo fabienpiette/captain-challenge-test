@@ -3,6 +3,11 @@
     %h1 Fights
   %hr.hr-captain-challenge
 
+  .row
+    .col
+      = line_chart @fights.group_by_day(:created_at).count, ytitle: "Number of fights"
+  %hr.hr-captain-challenge
+
   %table.table
     %thead
       %tr
@@ -13,8 +18,8 @@
     %tbody
       - @fights.each do |fight|
         %tr
-          %td= fight.fighter_left&.name
+          %td.text-success= fight.winning_character&.name
           %td VS
-          %td= fight.fighter_right&.name
+          %td.text-danger= fight.losing_character&.name
           %td= link_to 'Show', fight, class: 'btn btn-primary'
   %br/

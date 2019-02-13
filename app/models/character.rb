@@ -104,9 +104,13 @@ class Character < ApplicationRecord
   end
 
   def damage
-    return attack_points if weapon.blank?
+    return attack_points if weapons.blank?
 
-    attack_points + weapon.damage
+    attack_points + weapons.first.damage
+  end
+
+  def defense
+    constitution + shields.sum(:defense)
   end
 
   #

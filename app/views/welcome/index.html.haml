@@ -4,7 +4,10 @@
       .container
         %h1.masthead-heading.mb-0 Prove your value
         %h2.masthead-subheading.mb-0 What we do in life echoes in eternity
-        %a.btn.btn-primary.btn-xl.rounded-pill.mt-5{:href => "#"} Learn More
+        - if user_signed_in?
+          = link_to 'Create a character', new_character_path, class: 'btn btn-primary btn-xl rounded-pill mt-5'
+        - else
+          = link_to 'Create an account', new_user_registration_path, class: 'btn btn-primary btn-xl rounded-pill mt-5'
   %section
     .container
       .row.align-items-center
@@ -14,7 +17,7 @@
         .col-lg-6.order-lg-1
           .p-5
             %h2.display-4 Create your hero
-            %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+            %p= Faker::GreekPhilosophers.quote
   %section
     .container
       .row.align-items-center
@@ -24,7 +27,7 @@
         .col-lg-6
           .p-5
             %h2.display-4 Confront terrible opponents
-            %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+            %p= Faker::GreekPhilosophers.quote
   %section
     .container
       .row.align-items-center
@@ -34,4 +37,4 @@
         .col-lg-6.order-lg-1
           .p-5
             %h2.display-4 Become the king of the arena
-            %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.
+            %p= Faker::GreekPhilosophers.quote
