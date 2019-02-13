@@ -55,7 +55,7 @@ class ActionTest < ActiveSupport::TestCase
     @action.character = character
 
     assert_includes Action.with_fighter(character), @action
-    refute_includes Action.with_fighter(character), actions(:two)
+    assert_not_includes Action.with_fighter(character), actions(:two)
   end
 end
 

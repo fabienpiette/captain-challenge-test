@@ -1,26 +1,33 @@
 .container.container-captain
   .d-flex.justify-content-center
     %h1= "#{@fight.fighter_left&.name} VS #{@fight.fighter_right&.name}"
+
   - if @fight.finished?
     .d-flex.justify-content-center
       %h5.text-success= "#{@fight.winning_character.name} won"
+
   %hr.hr-captain-challenge
-  .d-flex.justify-content-center
-    - unless @fight.launched?
-      = link_to 'Launch', launch_fight_path(@fight), method: :post, class: 'btn btn-primary'
+  - unless @fight.launched?
+    .d-flex.justify-content-center= link_to 'Launch', launch_fight_path(@fight), method: :post, class: 'btn btn-primary'
 
-    - if @fight.launched? && !@fight.finished?
-      = link_to 'Next turn', take_turn_fight_path(@fight), method: :post, class: 'btn btn-primary'
+  - if @fight.finished?
+    .d-flex.justify-content-center= link_to 'Done', edit_character_path(@fight.winning_character), class: 'btn btn-primary'
 
-    - if @fight.finished?
-      = link_to 'Done', edit_character_path(@fight.winning_character), class: 'btn btn-primary'
+  - if @fight.launched? && !@fight.finished?
+    .row
+      .col-md-4
+        .progress.captain-pg
+          .progress-bar.bg-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{@fight.percent_hp(@fight.fighter_left)}", :role => "progressbar", :style => "width: #{@fight.percent_hp(@fight.fighter_left)}%;"}= "#{@fight.health_points(@fight.fighter_left)}/#{@fight.fighter_left.health_points}"
+      .col-md-4
+        .d-flex.justify-content-center= link_to 'Next turn', take_turn_fight_path(@fight), method: :post, class: 'btn btn-primary'
+      .col-md-4
+        .progress.captain-pg
+          .progress-bar.bg-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{@fight.percent_hp(@fight.fighter_right)}", :role => "progressbar", :style => "width: #{@fight.percent_hp(@fight.fighter_right)}%;"}= "#{@fight.health_points(@fight.fighter_right)}/#{@fight.fighter_right.health_points}"
   %hr.hr-captain-challenge
 
   .row
     .col-md-4
-      = render 'characters/card', character: @fight.fighter_left do
-        .progress
-          .progress-bar.bg-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{@fight.percent_hp(@fight.fighter_left)}", :role => "progressbar", :style => "width: #{@fight.percent_hp(@fight.fighter_left)}%;"}= "#{@fight.health_points(@fight.fighter_left)}/#{@fight.fighter_left.health_points}"
+      = render 'characters/card', character: @fight.fighter_left
     .col-md-4
       %table.table
         %thead
@@ -34,13 +41,11 @@
               = @fight.fighter_right.name
               score
         %tbody
-          - @fight.actions.each do |action|
+          - @fight.actions.order(created_at: :desc).each do |action|
             %tr
               %td{ scope: 'row' }= action.character&.name
               %td= action.damage
               %td{ class: score_color(action.fighter_left_score, action.fighter_right_score) }= action.fighter_left_score
               %td{ class: score_color(action.fighter_right_score, action.fighter_left_score) }= action.fighter_right_score
     .col-md-4
-      = render 'characters/card', character: @fight.fighter_right do
-        .progress
-          .progress-bar.bg-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{@fight.percent_hp(@fight.fighter_right)}", :role => "progressbar", :style => "width: #{@fight.percent_hp(@fight.fighter_right)}%;"}= "#{@fight.health_points(@fight.fighter_right)}/#{@fight.fighter_right.health_points}"
+      = render 'characters/card', character: @fight.fighter_right

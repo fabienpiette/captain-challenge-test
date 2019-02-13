@@ -4,10 +4,10 @@
   .row
     .col
       - if character.avatar.attached?
-        = image_tag(Rails.application.routes.url_helpers.rails_blob_path(character.avatar, only_path: true), style: 'height: 300px')
+        = image_tag(Rails.application.routes.url_helpers.rails_blob_path(character.avatar, only_path: true), style: 'height: 300px', class: 'rounded-circle')
       = f.input :avatar, label: false
     .col
-      %table.table
+      %table.table-striped
         %tbody
           %tr
             %th{:scope => "row"} Name

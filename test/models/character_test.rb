@@ -92,7 +92,7 @@ class CharacterTest < ActiveSupport::TestCase
   #
   test '#fights' do
     assert_includes @character.fights, fights(:one)
-    refute_includes @character.fights, fights(:three)
+    assert_not_includes @character.fights, fights(:three)
   end
 
   test '#fight_strategy' do

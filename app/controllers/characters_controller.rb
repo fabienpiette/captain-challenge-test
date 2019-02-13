@@ -63,12 +63,12 @@ class CharactersController < ApplicationController
   def character_params
     params
       .require(:character)
-      .permit([
-                :name,
-                :gladiator_type_id,
-                :avatar,
-                :weapon_ids,
-                :shield_ids
+      .permit(%i[
+                name
+                gladiator_type_id
+                avatar
+                weapon_ids
+                shield_ids
               ])
   end
 end
