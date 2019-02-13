@@ -22,6 +22,17 @@ two:
   level: 1
   xp_points: 0
 
+three:
+  name: MyString
+  health_points: 1
+  attack_points: 1
+  gladiator_type: two
+  dexterity: 1
+  capacity_points: 0
+  constitution: 1
+  level: 1
+  xp_points: 0
+
 # == Schema Information
 #
 # Table name: characters

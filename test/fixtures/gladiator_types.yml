@@ -16,6 +16,14 @@ two:
   constitution: 1
   dexterity: 1
 
+foo:
+  name: Foo
+  description: Bar
+  base_attack_points: 2
+  base_health_points: 4
+  constitution: 6
+  dexterity: 8
+
 # == Schema Information
 #
 # Table name: gladiator_types

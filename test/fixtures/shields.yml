@@ -8,6 +8,11 @@ two:
   name: MyString
   defense: 1
 
+poly:
+  id: 1
+  name: MyString
+  defense: 1
+
 # == Schema Information
 #
 # Table name: shields

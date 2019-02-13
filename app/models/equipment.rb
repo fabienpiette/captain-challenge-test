@@ -8,12 +8,6 @@ class Equipment < ApplicationRecord
   #
   # Associations
   #
-  # belongs_to :weapon,
-  #            class_name: 'Weapon',
-  #            foreign_key: 'weapon_id',
-  #            inverse_of: :equipments
-  # accepts_nested_attributes_for :weapon
-
   belongs_to :usable,
              polymorphic: true
   accepts_nested_attributes_for :usable

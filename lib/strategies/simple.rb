@@ -5,6 +5,8 @@ module Strategies
   # Simple
   #
   class Simple
+    attr_accessor :dexterity
+
     def initialize(attrs = {})
       @dexterity = attrs.fetch(:dexterity) { 0 }
     end

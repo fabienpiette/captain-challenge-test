@@ -1,12 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  usable:
-  character:
+  character: three
+  usable_type: Weapon
+  usable_id: 1
 
 two:
-  usable:
-  character:
+  usable_type: Shield
+  usable_id: 1
+  character: three
 
 # == Schema Information
 #

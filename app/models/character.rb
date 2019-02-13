@@ -98,15 +98,11 @@ class Character < ApplicationRecord
   end
 
   def fight_strategy
-    Strategies::Simple.new(
-      dexterity: dexterity
-    )
+    Strategies::Simple.new(dexterity: dexterity)
   end
 
   def damage
-    return attack_points if weapons.blank?
-
-    attack_points + weapons.first.damage
+    attack_points + weapons.sum(:damage)
   end
 
   def defense
@@ -120,8 +116,8 @@ class Character < ApplicationRecord
   #
   # Protected instance methods
   #
-  # protected
-  #
+  protected
+
   def define_points
     self.attack_points = gladiator_type&.base_attack_points
     self.health_points = gladiator_type&.base_health_points
@@ -131,9 +127,10 @@ class Character < ApplicationRecord
 
   def check_xp
     if xp_points >= 10
-      capacity_points += 1
-      level           += 1
-      xp_points = 0
+      self.capacity_points += 1
+      self.level           += 1
+      self.xp_points = 0
+
       save
     end
   end

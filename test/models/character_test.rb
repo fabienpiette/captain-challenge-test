@@ -90,13 +90,97 @@ class CharacterTest < ActiveSupport::TestCase
   #
   # Public instance methods
   #
+  test '#fights' do
+    assert_includes @character.fights, fights(:one)
+    refute_includes @character.fights, fights(:three)
+  end
+
+  test '#fight_strategy' do
+    assert_instance_of Strategies::Simple, @character.fight_strategy
+  end
+
+  test '#damage without weapons' do
+    @character.attack_points = 2
+
+    assert_equal @character.damage, 2
+  end
+
+  test '#damage with weapons' do
+    @character.attack_points = 2
+    @character.weapons << weapons(:one)
+    @character.weapons << weapons(:one)
+
+    assert_equal @character.damage, 4
+  end
+
+  test '#defense without shields' do
+    @character.constitution = 2
+
+    assert_equal @character.defense, 2
+  end
+
+  test '#defense with shields' do
+    @character.constitution = 2
+    @character.shields << shields(:one)
+    @character.shields << shields(:one)
+
+    assert_equal @character.defense, 4
+  end
 
   #
   # Protected instance methods
   #
   #
-  # test '#foo' do
-  # end
+  test '#define_points' do
+    character = Character.new(name: 'Foo')
+    gladiator = gladiator_types(:foo)
+
+    character.gladiator_type = gladiator
+
+    assert_equal character.attack_points, 1
+    assert_equal character.health_points, 20
+    assert_equal character.dexterity, 1
+    assert_equal character.constitution, 1
+
+    character.save
+
+    assert_equal character.attack_points, gladiator.base_attack_points
+    assert_equal character.health_points, gladiator.base_health_points
+    assert_equal character.dexterity, gladiator.dexterity
+    assert_equal character.constitution, gladiator.constitution
+  end
+
+  test '#check_xp, increment capacity_points when enought XP' do
+    character                 = characters(:one)
+    character.xp_points       = 10
+    character.capacity_points = 0
+    character.level           = 1
+
+    assert_difference 'character.capacity_points', 1 do
+      character.save
+    end
+  end
+
+  test '#check_xp, increment level when enought XP' do
+    character                 = characters(:one)
+    character.xp_points       = 10
+    character.capacity_points = 0
+    character.level           = 1
+
+    assert_difference 'character.level', 1 do
+      character.save
+    end
+  end
+
+  test '#check_xp, reset XP' do
+    character                 = characters(:one)
+    character.xp_points       = 10
+    character.capacity_points = 0
+    character.level           = 1
+
+    character.save
+    assert_equal character.xp_points, 0
+  end
 end
 
 # == Schema Information

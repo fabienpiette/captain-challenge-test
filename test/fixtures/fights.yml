@@ -4,11 +4,15 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+one:
+  fighter_left: one
+  fighter_right: two
+two:
+  fighter_left: two
+  fighter_right: one
+three:
+  fighter_left: two
+  fighter_right: three
 
 # == Schema Information
 #

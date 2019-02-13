@@ -8,6 +8,11 @@ two:
   name: MyString
   damage: 1
 
+poly:
+  id: 1
+  name: MyString
+  damage: 1
+
 # == Schema Information
 #
 # Table name: weapons
