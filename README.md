@@ -1,5 +1,21 @@
 # Captain Challenge
 
+## Setup
+
+You must launch migration and seeds with:
+
+`bundle exec rake db:migrate db:seed`
+
+You can launch rails server with:
+
+`bundle exec rails s`
+
+## Test
+
+To launch tests (Minitest) you can use this command:
+
+`bundle exec rails test`
+
 ## Subject
 
 Bienvenue jeune moussaillon !

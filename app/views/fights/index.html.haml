@@ -1,25 +1,24 @@
-.container.container-captain
-  .d-flex.justify-content-center
-    %h1 Fights
-  %hr.hr-captain-challenge
+.d-flex.justify-content-center
+  %h1 Fights
+%hr.hr-captain-challenge
 
-  .row
-    .col
-      = line_chart @fights.group_by_day(:created_at).count, ytitle: "Number of fights"
-  %hr.hr-captain-challenge
+.row
+  .col
+    = line_chart @fights.group_by_day(:created_at).count, ytitle: "Number of fights"
+%hr.hr-captain-challenge
 
-  %table.table
-    %thead
+%table.table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+      %th{:colspan => "3"}
+  %tbody
+    - @fights.each do |fight|
       %tr
-        %th
-        %th
-        %th
-        %th{:colspan => "3"}
-    %tbody
-      - @fights.each do |fight|
-        %tr
-          %td.text-success= fight.winning_character&.name
-          %td VS
-          %td.text-danger= fight.losing_character&.name
-          %td= link_to 'Show', fight, class: 'btn btn-primary'
-  %br/
+        %td.text-success= fight.winning_character&.name
+        %td VS
+        %td.text-danger= fight.losing_character&.name
+        %td= link_to 'Show', fight, class: 'btn btn-primary'
+%br/

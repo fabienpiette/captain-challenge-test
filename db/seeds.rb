@@ -41,3 +41,10 @@ Shield.create(
   name: 'Oblong shield',
   defense: 2
 )
+
+Administrator.create(
+  email: 'admin@example.com',
+  password: 'password',
+  first_name: 'Admin',
+  last_name: 'User'
+)

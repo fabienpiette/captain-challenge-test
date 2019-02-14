@@ -1,20 +1,19 @@
-.container.container-captain
-  .row
-    .col-sm
-      %h1 My Characters
-    .col-sm
-      = link_to 'New Character', new_character_path, class: 'btn btn-primary float-right'
-  %hr.hr-captain-challenge
-  .characters-listing-primary= "Character Slots: #{@characters.count}"
-  .characters-listing-secondary Character slots allow players to create characters. Once created, all of your characters will appear in the list below.
-  %hr.hr-captain-challenge
+.row
+  .col-sm
+    %h1 My Characters
+  .col-sm
+    = link_to 'New Character', new_character_path, class: 'btn btn-primary float-right'
+%hr.hr-captain-challenge
+.characters-listing-primary= "Character Slots: #{@characters.count}"
+.characters-listing-secondary Character slots allow players to create characters. Once created, all of your characters will appear in the list below.
+%hr.hr-captain-challenge
 
-  .card-deck
-    - @characters.each_slice(4) do |characters|
-      .row.row-character
-        - characters.each do |character|
-          = render 'characters/card', character: character do
-            .card-footer.text-muted
-              = link_to 'Edit', edit_character_path(character), class: 'btn btn-info character-card-links-item'
-              = link_to 'Fight', new_character_fight_path(character), class: 'btn btn-info character-card-links-item'
-              = link_to 'Delete', character, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary character-card-links-item'
+.card-deck
+  - @characters.each_slice(4) do |characters|
+    .row.row-character
+      - characters.each do |character|
+        = render 'characters/card', character: character do
+          .card-footer.text-muted
+            = link_to 'Edit', edit_character_path(character), class: 'btn btn-info character-card-links-item'
+            = link_to 'Fight', new_character_fight_path(character), class: 'btn btn-info character-card-links-item'
+            = link_to 'Delete', character, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary character-card-links-item'

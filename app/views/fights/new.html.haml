@@ -1,9 +1,8 @@
-.container.container-captain
-  = render 'form', fight: @fight do |f|
-    .row
-      .col-sm
-        %h1 New Fight
-      .col-sm
-        = f.button :submit, 'Submit', class: 'btn btn-primary float-right'
-    %hr.hr-captain-challenge
+= render 'form', fight: @fight do |f|
+  .row
+    .col-sm
+      %h1 New Fight
+    .col-sm
+      = f.button :submit, 'Submit', class: 'btn btn-primary float-right'
+  %hr.hr-captain-challenge
 
