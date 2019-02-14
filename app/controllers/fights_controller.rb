@@ -31,7 +31,7 @@ class FightsController < ApplicationController
 
     respond_to do |format|
       if @fight.save!
-        format.html { redirect_to @fight, success: 'Fight was successfully created.' }
+        format.html { redirect_to @fight, notice: 'Fight was successfully created.' }
       else
         format.html { render :new }
       end
@@ -42,7 +42,7 @@ class FightsController < ApplicationController
   def update
     respond_to do |format|
       if @fight.update(fight_params)
-        format.html { redirect_to @fight, success: 'Fight was successfully updated.' }
+        format.html { redirect_to @fight, notice: 'Fight was successfully updated.' }
       else
         format.html { render :edit }
       end
@@ -54,7 +54,7 @@ class FightsController < ApplicationController
     @fight.destroy
 
     respond_to do |format|
-      format.html { redirect_to fights_url, success: 'Fight was successfully destroyed.' }
+      format.html { redirect_to fights_url, notice: 'Fight was successfully destroyed.' }
     end
   end
 
@@ -62,7 +62,7 @@ class FightsController < ApplicationController
     @fight.launch
 
     respond_to do |format|
-      format.html { redirect_to @fight, success: 'The fight begins.' }
+      format.html { redirect_to @fight, notice: 'The fight begins.' }
     end
   end
 

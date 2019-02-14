@@ -25,7 +25,7 @@ class CharactersController < ApplicationController
 
     if @character.save
       redirect_to characters_url,
-                  success: 'Character was successfully created.'
+                  notice: 'Character was successfully created.'
     else
       flash[:danger] = @character.errors.full_messages.join('. ')
       render :new
@@ -36,7 +36,7 @@ class CharactersController < ApplicationController
   def update
     if @character.update(character_params)
       redirect_to [:edit, @character],
-                  success: 'Character was successfully updated.'
+                  notice: 'Character was successfully updated.'
     else
       render :edit
     end
@@ -46,7 +46,7 @@ class CharactersController < ApplicationController
   def destroy
     @character.destroy
 
-    redirect_to characters_url, success: 'Character was successfully destroyed.'
+    redirect_to characters_url, notice: 'Character was successfully destroyed.'
   end
 
   protected
