@@ -4,11 +4,16 @@ class Weapon < ApplicationRecord
   #
   # Validations
   #
+  validates :name,
+            :damage,
+            presence: true
 
   #
   # Associations
   #
-  has_many :equipments, as: :usables
+  has_many :equipments,
+           as: :usables,
+           dependent: :destroy
 
   #
   # Through Associations

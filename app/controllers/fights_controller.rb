@@ -68,6 +68,7 @@ class FightsController < ApplicationController
 
   def take_turn
     @fight.take_turn
+    @fight.clean
 
     respond_to do |format|
       format.html { redirect_to @fight }

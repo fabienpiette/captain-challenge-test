@@ -44,12 +44,6 @@ class ActionTest < ActiveSupport::TestCase
   #
   # Scopes
   #
-  # test '#opponent' do
-  #   character         = characters(:one)
-  #   @action.character = character
-  #   assert_includes Action.opponent(character), @action
-  #   refute_includes Action.opponent(character), actions(:two)
-  # end
   test '#with_fighter' do
     character         = characters(:one)
     @action.character = character

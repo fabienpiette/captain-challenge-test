@@ -19,6 +19,7 @@ class Action < ApplicationRecord
   belongs_to :character,
              class_name: 'Character',
              foreign_key: 'current_fighter_id',
+             inverse_of: :actions,
              optional: true
 
   #

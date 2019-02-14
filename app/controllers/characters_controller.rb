@@ -23,33 +23,30 @@ class CharactersController < ApplicationController
   def create
     @character = current_user.characters.new(character_params)
 
-    respond_to do |format|
-      if @character.save
-        format.html { redirect_to characters_url, success: 'Character was successfully created.' }
-      else
-        flash[:danger] = @character.errors.full_messages.join('. ')
-        format.html { render :new }
-      end
+    if @character.save
+      redirect_to characters_url,
+                  success: 'Character was successfully created.'
+    else
+      flash[:danger] = @character.errors.full_messages.join('. ')
+      render :new
     end
   end
 
   # PATCH/PUT /characters/1
   def update
-    respond_to do |format|
-      if @character.update(character_params)
-        format.html { redirect_to [:edit, @character], success: 'Character was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
+    if @character.update(character_params)
+      redirect_to [:edit, @character],
+                  success: 'Character was successfully updated.'
+    else
+      render :edit
     end
   end
 
   # DELETE /characters/1
   def destroy
     @character.destroy
-    respond_to do |format|
-      format.html { redirect_to characters_url, success: 'Character was successfully destroyed.' }
-    end
+
+    redirect_to characters_url, success: 'Character was successfully destroyed.'
   end
 
   protected

@@ -4,10 +4,9 @@ datas = YAML.safe_load(
   File.open(Rails.root.join('db', 'datas', 'import', 'types.yml'))
 )
 datas.each do |data|
-  picture_name = data.delete('picture')
-  path = Rails.root.join('db', 'datas', 'images', picture_name)
-
-  type = GladiatorType.create!(data)
+  # picture_name = data.delete('picture')
+  # path = Rails.root.join('db', 'datas', 'images', picture_name)
+  GladiatorType.create!(data)
   # type.avatar.attach(io: File.open(path), filename: picture_name)
 end
 

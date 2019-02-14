@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery prepend: true
   before_action :authenticate_user!
 
+  respond_to :html
+
   protected
 
   def after_sign_in_path_for(resource)

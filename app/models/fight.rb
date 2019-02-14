@@ -67,49 +67,78 @@ class Fight < ApplicationRecord
   # Public instance methods
   #
   def launch
-    Rails.logger.info "-- Launch fight between #{fighter_left.name} and #{fighter_right.name}"
-
     actions.create(
       left_hp: fighter_left.health_points,
       right_hp: fighter_right.health_points
     )
   end
 
-  def take_turn
-    return if finished?
+  def take_turn(
+    left_score = fighter_left_score,
+    right_score = fighter_right_score
+  )
+    return false unless take_turn?
 
-    if fighter_left_score > fighter_right_score
-      wound(
-        fighter_right,
-        damage_with(fighter_left, fighter_right),
-        :right
-      )
-    elsif fighter_left_score < fighter_right_score
-      wound(
-        fighter_left,
-        damage_with(fighter_right, fighter_left),
-        :left
-      )
-    elsif fighter_left_score == fighter_right_score
+    if left_score > right_score
+      wound(fighter_left, fighter_right, :right)
+    elsif right_score > left_score
+      wound(fighter_right, fighter_left, :left)
+    elsif left_score == right_score
       miss
     end
 
-    clean
     finished if finished?
+    true
   end
 
-  def damage_with(forward, defender)
-    damage = forward.damage - defender.defense
-    damage = 0 if damage < 0
-    damage
+  def clean
+    @fighter_left_score  = nil
+    @fighter_right_score = nil
   end
 
   def launched?
-    actions.count > 0
+    actions.count.positive?
   end
 
   def finished?
     dead?(fighter_left) || dead?(fighter_right)
+  end
+
+  def percent_hp(character)
+    (health_points(character) * 100) / character.health_points
+  end
+
+  def health_points(character)
+    character.health_points - actions.with_fighter(opposite_character(character)).sum(&:damage)
+  end
+
+  def name
+    "#{fighter_left&.name} VS #{fighter_right&.name}"
+  end
+
+  def fighter_left_score
+    @fighter_left_score || fighter_left.fight_strategy.process
+  end
+
+  def fighter_right_score
+    @fighter_right_score || fighter_right.fight_strategy.process
+  end
+
+  #
+  # Protected instance methods
+  #
+  protected
+
+  def take_turn?
+    !finished? && launched?
+  end
+
+  def dead?(character)
+    health_points(character) <= 0
+  end
+
+  def alive?(character)
+    health_points(character).positive?
   end
 
   def winner
@@ -124,23 +153,11 @@ class Fight < ApplicationRecord
     fighter_right if dead?(fighter_right) && alive?(fighter_left)
   end
 
-  def percent_hp(character)
-    (health_points(character) * 100) / character.health_points
+  def damage_with(attacker, defender)
+    damage = attacker.damage - defender.defense
+    damage = 0 if damage.negative?
+    damage
   end
-
-  def health_points(character)
-    # character.health_points - actions.opponent(character).sum(&:damage)
-    character.health_points - actions.with_fighter(opposite_character(character)).sum(&:damage)
-  end
-
-  def name
-    "#{fighter_left&.name} VS #{fighter_right&.name}"
-  end
-
-  #
-  # Protected instance methods
-  #
-  protected
 
   def finished
     update(
@@ -153,58 +170,29 @@ class Fight < ApplicationRecord
     winning_character.save
   end
 
-  def clean
-    @fighter_left_score  = nil
-    @fighter_right_score = nil
-  end
-
-  def wound(character, damage, side)
-    Rails.logger.info "-- #{character.name} touch with #{damage} damage."
-
-    opposite = opposite_character(character)
+  def wound(attacker, defender, defender_side, damage = nil)
+    damage ||= damage_with(attacker, defender)
 
     action = actions.build(
       damage: damage,
       fighter_left_score: fighter_left_score,
       fighter_right_score: fighter_right_score,
-      character: opposite
+      character: attacker
     )
-    action.send(
-      "#{side}_hp=",
-      health_points(character) - damage
-    )
-    action.send(
-      "#{opposite_side(side)}_hp=",
-      health_points(opposite)
-    )
+
+    action.send("#{defender_side}_hp=", health_points(defender) - damage)
+    action.send("#{opposite_side(defender_side)}_hp=", health_points(attacker))
     action.save
+    action
   end
 
   def miss
-    Rails.logger.info '-- Miss'
-
     actions.create(
       fighter_left_score: fighter_left_score,
       fighter_right_score: fighter_right_score,
       left_hp: health_points(fighter_left),
       right_hp: health_points(fighter_right)
     )
-  end
-
-  def fighter_left_score
-    @fighter_left_score ||= fighter_left.fight_strategy.process
-  end
-
-  def fighter_right_score
-    @fighter_right_score ||= fighter_right.fight_strategy.process
-  end
-
-  def dead?(character)
-    health_points(character) <= 0
-  end
-
-  def alive?(character)
-    health_points(character) > 0
   end
 
   def opposite_side(side)

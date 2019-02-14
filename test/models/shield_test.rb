@@ -3,9 +3,55 @@
 require 'test_helper'
 
 class ShieldTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  #
+  # Setups
+  #
+  def setup
+    @shield = shields(:one)
+  end
+
+  #
+  # Validations
+  #
+  test 'valid shield' do
+    assert @shield.valid?
+  end
+
+  test 'invalid without name' do
+    shield      = shields(:one)
+    shield.name = nil
+
+    assert_not @shield.valid?, 'shield is valid without a name'
+    assert_not_nil @shield.errors[:name], 'no validation error for name present'
+  end
+
+  test 'invalid without defense' do
+    shield         = shields(:one)
+    shield.defense = nil
+
+    assert_not @shield.valid?, 'shield is valid without a defense'
+    assert_not_nil @shield.errors[:defense], 'no validation error for defense present'
+  end
+
+  #
+  # Associations
+  #
+
+  #
+  # Scopes
+  #
+
+  #
+  # Public class methods
+  #
+
+  #
+  # Public instance methods
+  #
+
+  #
+  # Protected instance methods
+  #
 end
 
 # == Schema Information

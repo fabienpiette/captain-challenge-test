@@ -61,6 +61,12 @@ class Character < ApplicationRecord
            dependent: :destroy,
            inverse_of: :losing_character
 
+  has_many :actions,
+           class_name: 'Action',
+           foreign_key: 'current_fighter_id',
+           dependent: :destroy,
+           inverse_of: :character
+
   #
   # Through Associations
   #
@@ -126,13 +132,13 @@ class Character < ApplicationRecord
   end
 
   def check_xp
-    if xp_points >= 10
-      self.capacity_points += 1
-      self.level           += 1
-      self.xp_points = 0
+    return if xp_points < 10
 
-      save
-    end
+    self.capacity_points += 1
+    self.level           += 1
+    self.xp_points = 0
+
+    save
   end
 end
 

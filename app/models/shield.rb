@@ -4,11 +4,16 @@ class Shield < ApplicationRecord
   #
   # Validations
   #
+  validates :name,
+            :defense,
+            presence: true
 
   #
   # Associations
   #
-  has_many :equipments, as: :usables
+  has_many :equipments,
+           as: :usables,
+           dependent: :destroy
 
   #
   # Through Associations

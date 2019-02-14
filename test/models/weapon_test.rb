@@ -3,9 +3,55 @@
 require 'test_helper'
 
 class WeaponTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  #
+  # Setups
+  #
+  def setup
+    @weapon = weapons(:one)
+  end
+
+  #
+  # Validations
+  #
+  test 'valid weapon' do
+    assert @weapon.valid?
+  end
+
+  test 'invalid without name' do
+    weapon      = weapons(:one)
+    weapon.name = nil
+
+    assert_not @weapon.valid?, 'weapon is valid without a name'
+    assert_not_nil @weapon.errors[:name], 'no validation error for name present'
+  end
+
+  test 'invalid without damage' do
+    weapon        = weapons(:one)
+    weapon.damage = nil
+
+    assert_not @weapon.valid?, 'weapon is valid without a damage'
+    assert_not_nil @weapon.errors[:damage], 'no validation error for damage present'
+  end
+
+  #
+  # Associations
+  #
+
+  #
+  # Scopes
+  #
+
+  #
+  # Public class methods
+  #
+
+  #
+  # Public instance methods
+  #
+
+  #
+  # Protected instance methods
+  #
 end
 
 # == Schema Information

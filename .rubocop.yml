@@ -27,7 +27,7 @@ AllCops:
     - 'lib/**/*'
     - 'log/**/*'
     - 'public/**/*'
-    - 'spec/**/*'
+    - 'test/**/*'
     - 'vendor/**/*'
     - 'bin/**/*'
 Metrics/CyclomaticComplexity:
