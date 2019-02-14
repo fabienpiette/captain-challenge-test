@@ -1,5 +1,5 @@
 %body
-  %header.masthead.text-center.text-white
+  %header.masthead.text-center.text-white{style: "background-image: url(#{image_path('001.jpg')})"}
     .masthead-content
       .container
         %h1.masthead-heading.mb-0 Prove your value
@@ -8,6 +8,7 @@
           = link_to 'Create a character', new_character_path, class: 'btn btn-primary btn-xl rounded-pill mt-5'
         - else
           = link_to 'Create an account', new_user_registration_path, class: 'btn btn-primary btn-xl rounded-pill mt-5'
+  }
   %section
     .container
       .row.align-items-center
