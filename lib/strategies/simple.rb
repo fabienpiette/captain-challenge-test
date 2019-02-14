@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 module Strategies
+  # Simple strategie draws a number between
+  # one and six plus the dexterity value
   #
-  # Simple
+  # @param dexterity [Integer] bonus on the score
   #
   class Simple
     attr_accessor :dexterity
