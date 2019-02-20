@@ -16,6 +16,10 @@ To launch tests (Minitest) you can use this command:
 
 `bundle exec rails test`
 
+## Heroku
+
+You can view a live version of the project [here](https://captain-challenge-test.herokuapp.com)
+
 ## Subject
 
 Bienvenue jeune moussaillon !
